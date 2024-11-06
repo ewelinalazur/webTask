@@ -1,3 +1,42 @@
 .contact {
-  height: 30rem;
+  padding: 9rem 0;
+
+  & .container {
+    max-width: 111rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 44.4rem;
+
+    & > p {
+      margin: 2.4rem 0 4rem 0;
+    }
+  }
+
+  & .flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & > input {
+      margin-bottom: 0;
+    }
+  }
+
+  & .btn {
+    max-width: 14rem;
+    background-color: #ed4c5c;
+    color: white;
+    border-radius: 6px;
+    border-color: #ed4c5c;
+    padding: 1.7rem 2.1rem;
+    font-size: 1.4rem;
+  }
 }
