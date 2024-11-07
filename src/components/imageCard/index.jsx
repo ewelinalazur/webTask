@@ -1,20 +1,31 @@
-import Image from '../image'
-import Heading from '../heading';
-import Text from '../text';
-import './index.css'
+import Image from "../image";
+import Heading from "../heading";
+import Text from "../text";
 
+import "./index.css";
 
-const ImageCard = ({image, heading, text, link}) => {
+const ImageCard = ({ image, heading, text, link }) => {
   return (
     <div className="imageCard">
-      <Image src={image} alt={heading} className="imageCard__image"/>
-      <div className='imageCard__content'>
+      <Image
+        src={image}
+        alt={heading}
+        className="imageCard__image"
+        placeholderSrc="https://example.com/placeholder.jpg"
+        fallbackSrc="https://example.com/fallback.jpg"
+        lazy={true}
+        onLoad={() => console.log("Image loaded!")}
+        onError={() => console.log("Failed to load image.")}
+      />
+      <div className="imageCard__content">
         <Heading level={3}>{heading}</Heading>
         <Text className="imageCard__text"> {text} </Text>
-        <a href={link} className='imageCard__link'>Read More</a>
+        <a href={link} className="imageCard__link">
+          Read More
+        </a>
       </div>
     </div>
-  )
+  );
 };
 
 export default ImageCard;
