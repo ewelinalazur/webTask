@@ -6,6 +6,13 @@ import Heading from "../../components/heading";
 import Text from "../../components/text";
 import FormInput from "../../components/formInput";
 
+const errorMessages = {
+  firstName: "First name is required.",
+  lastName: "Last name is required.",
+  phoneNumber: "Invalid phone number.",
+  service: "Service is required.",
+};
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -14,22 +21,29 @@ const Contact = () => {
     service: "",
   });
   const [errors, setErrors] = useState({});
+  const phonePattern = /^(\+[1-9]{1}[0-9]{3,14})?([0-9]{9,14})$/;
 
-  const validate = () => {
-    const newErrors = {};
-    const phonePattern = /^(\+[1-9]{1}[0-9]{3,14})?([0-9]{9,14})$/;
-
-    if (!formData.firstName) newErrors.firstName = "First name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.phoneNumber) {
-      newErrors.phoneNumber = "Phone number is required.";
-    } else if (!phonePattern.test(formData.phoneNumber)) {
-      newErrors.phoneNumber = "Invalid phone number.";
+  const validateField = (name, value) => {
+    if (!value && errorMessages[name]) {
+      return errorMessages[name];
     }
-    if (!formData.service) newErrors.service = "Service is required.";
 
+    if (name === "phoneNumber" && !phonePattern.test(value)) {
+      return errorMessages.phoneNumber;
+    }
+
+    return "";
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    Object.keys(formData).forEach((field) => {
+      const error = validateField(field, formData[field]);
+      if (error) newErrors[field] = error;
+    });
     return newErrors;
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -44,7 +58,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
@@ -74,6 +88,7 @@ const Contact = () => {
               required
               name="firstName"
               placeholder="First Name"
+              type="text"
               value={formData.firstName}
               onChange={handleChange}
             />
@@ -85,6 +100,7 @@ const Contact = () => {
               required
               name="lastName"
               placeholder="Last Name"
+              type="text"
               value={formData.lastName}
               onChange={handleChange}
             />
@@ -93,10 +109,11 @@ const Contact = () => {
             )}
           </div>
           <FormInput
-            style="full"
+            required
             name="phoneNumber"
             placeholder="Phone Number"
-            required
+            type="tel"
+            style="full"
             value={formData.phoneNumber}
             onChange={handleChange}
           />
@@ -105,10 +122,11 @@ const Contact = () => {
           )}
 
           <FormInput
-            style="full"
+            required
             name="service"
             placeholder="Which service are you interested in?"
-            required
+            type="text"
+            style="full"
             value={formData.service}
             onChange={handleChange}
           />
