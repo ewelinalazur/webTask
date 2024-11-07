@@ -10,10 +10,9 @@ const ImageCard = ({ image, heading, text, link }) => {
       <Image
         src={image}
         alt={heading}
-        className="imageCard__image"
+        imageClassName="imageCard__image"
         placeholderSrc="https://example.com/placeholder.jpg"
         fallbackSrc="https://example.com/fallback.jpg"
-        lazy={true}
         onLoad={() => console.log("Image loaded!")}
         onError={() => console.log("Failed to load image.")}
       />

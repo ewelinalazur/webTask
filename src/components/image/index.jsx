@@ -3,7 +3,8 @@ import React, { useState } from "react";
 const Image = ({
   src,
   alt,
-  className = "",
+  wrapperClassName = "",
+  imageClassName = "",
   width = "auto",
   height = "auto",
   placeholderSrc = "",
@@ -12,14 +13,17 @@ const Image = ({
   objectFit = "cover",
   onLoad = () => {},
   onError = () => {},
+  ...imgProps
 }) => {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleImageError = (e) => {
     setHasError(true);
-    if (fallbackSrc) e.target.src = fallbackSrc;
-    e.target.alt = "Image failed to load";
+    if (fallbackSrc) {
+      e.target.src = fallbackSrc;
+      e.target.alt = alt || "Image failed to load";
+    }
     onError(e);
   };
 
@@ -30,7 +34,7 @@ const Image = ({
 
   return (
     <div
-      className={"imageWrapper"}
+      className={`imageWrapper ${wrapperClassName}`}
       style={{
         "--width": width,
         "--height": height,
@@ -47,10 +51,13 @@ const Image = ({
       <img
         src={hasError ? fallbackSrc || "" : src}
         alt={alt}
-        className={`mainImage ${isLoaded ? "loaded" : "loading"} ${className}`}
+        className={`mainImage ${
+          isLoaded ? "loaded" : "loading"
+        } ${imageClassName}`}
         loading={lazy ? "lazy" : "eager"}
         onLoad={handleImageLoad}
         onError={handleImageError}
+        {...imgProps}
       />
     </div>
   );
