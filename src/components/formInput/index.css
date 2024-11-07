@@ -1,7 +1,7 @@
 .formInput {
   max-width: 100%;
   display: block;
-  border-radius: .6rem;
+  border-radius: 0.6rem;
   height: 6rem;
   border: 1px solid #333;
   padding: 2rem 3rem;
@@ -19,4 +19,9 @@
 
 .formInput-half {
   width: 25.5rem;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
 }

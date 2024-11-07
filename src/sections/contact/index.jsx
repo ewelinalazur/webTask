@@ -5,6 +5,7 @@ import { useState } from "react";
 import Heading from "../../components/heading";
 import Text from "../../components/text";
 import FormInput from "../../components/formInput";
+import contactModel from "../../models/Contact.model";
 
 const errorMessages = {
   firstName: "First name is required.",
@@ -76,11 +77,8 @@ const Contact = () => {
     <div className="contact">
       <div className="container">
         <div className="content">
-          <Heading level={2}>Contact</Heading>
-          <Text>
-            Questions or concerns? Just fill out the form below and our support
-            team will get back to you within 24 hours
-          </Text>
+          <Heading level={2}>{contactModel.heading}</Heading>
+          <Text>{contactModel.text}</Text>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="flex-row">
@@ -91,10 +89,8 @@ const Contact = () => {
               type="text"
               value={formData.firstName}
               onChange={handleChange}
+              error={errors.firstName}
             />
-            {errors.firstName && (
-              <span className="error">{errors.firstName}</span>
-            )}
 
             <FormInput
               required
@@ -103,23 +99,19 @@ const Contact = () => {
               type="text"
               value={formData.lastName}
               onChange={handleChange}
+              error={errors.lastName}
             />
-            {errors.lastName && (
-              <span className="error">{errors.lastName}</span>
-            )}
           </div>
           <FormInput
             required
             name="phoneNumber"
             placeholder="Phone Number"
-            type="tel"
+            type="text"
             style="full"
             value={formData.phoneNumber}
             onChange={handleChange}
+            error={errors.phoneNumber}
           />
-          {errors.phoneNumber && (
-            <span className="error">{errors.phoneNumber}</span>
-          )}
 
           <FormInput
             required
@@ -129,8 +121,8 @@ const Contact = () => {
             style="full"
             value={formData.service}
             onChange={handleChange}
+            error={errors.service}
           />
-          {errors.service && <span className="error">{errors.service}</span>}
 
           <button type="submit" className="btn">
             SUBMIT NOW
